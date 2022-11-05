@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Sample Project" default="main" basedir=".">
 
-    <target name="main" depends="init, compile">
-    </target>
-
     <property name="source.dir" location="src"/>
     <property name="build.dir" location="bin"/>
     <property name="doc.dir" location="doc"/>
+    <property name="test.dir" value="test"/>
+
+    <target name="main" depends="clean, init, compile,doc">
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+
+        <delete>
+            <fileset defaultexcludes="no" dir="${source.dir}" includes="**/*~" />
+        </delete>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+        <mkdir dir="${test.dir}"/>
+    </target>
 
     <path id="junit.class.path">
         <pathelement location="lib/junit-4.13.2.jar" />
@@ -14,14 +29,17 @@
         <pathelement location="${build.dir}" />
     </path>
 
-    <target name="init">
-        <mkdir dir="${build.dir}"/>
-        <mkdir dir="${doc.dir}"/>
+    <target name="compile" depends="clean">
+        <javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath refid="junit.class.path"/>
+        </javac>
+        <javac srcdir="${test.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath refid="junit.class.path"/>
+        </javac>
     </target>
 
-    <target name="compile">
-        <javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="false" />
+    <target name="doc">
+        <javadoc sourcepath="${source.dir}" destdir="${doc.dir}"/>
     </target>
-
 
 </project>
