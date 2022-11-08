@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Sample Project" default="main" basedir=".">
+<project name="Project Continuos Integration - Unit Tests" default="main" basedir=".">
 
     <property name="source.dir" location="src"/>
     <property name="build.dir" location="bin"/>
@@ -17,7 +17,7 @@
         </delete>
     </target>
 
-    <target name="init">
+    <target name="init" depends="clean">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${doc.dir}"/>
         <mkdir dir="${reports.dir}"/>
